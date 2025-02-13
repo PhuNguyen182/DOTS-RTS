@@ -1,12 +1,15 @@
 using System;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
 public class UnitSelectionManager : MonoBehaviour
 {
+    private const float RingSize = 2f;
+
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float minMultipleSelectSize = 50;
     [SerializeField] private LayerMask unitMask;
@@ -85,11 +88,12 @@ public class UnitSelectionManager : MonoBehaviour
 
         NativeArray<Entity> entities = entityQuery.ToEntityArray(Allocator.Temp);
         NativeArray<UnitMover> unitMovers = entityQuery.ToComponentDataArray<UnitMover>(Allocator.Temp);
+        NativeArray<float3> unitPositions = GetGenerateMovePositions(mousePosition, unitMovers.Length);
 
         for (int i = 0; i < unitMovers.Length; i++)
         {
             UnitMover unitMover = unitMovers[i];
-            unitMover.TargetPosition = mousePosition;
+            unitMover.TargetPosition = unitPositions[i];
             unitMovers[i] = unitMover;
         }
 
@@ -135,6 +139,45 @@ public class UnitSelectionManager : MonoBehaviour
             if (selectArea.Contains(unitScreenPosition))
                 _entityManager.SetComponentEnabled<Selected>(_selectEntities[i], true);
         }
+    }
+
+    private NativeArray<float3> GetGenerateMovePositions(float3 targetPosition, int positionCount)
+    {
+        NativeArray<float3> movePositions = new NativeArray<float3>(positionCount, Allocator.Temp);
+        
+        if (positionCount == 0)
+            return movePositions;
+        
+        else if(positionCount == 1)
+        {
+            movePositions[0] = targetPosition;
+            return movePositions;
+        }
+
+        int ringCount = 0;
+        int positionIndex = 0;
+
+        while (positionIndex < positionCount)
+        {
+            int ringPositionCount = 3 + ringCount * 2;
+            for (int i = 0; i < ringPositionCount; i++)
+            {
+                float angle = i * (math.PI2 / ringPositionCount);
+                quaternion rotation = quaternion.RotateY(angle);
+                float3 movePosition = new float3(RingSize * (ringCount + 1), 0, 0);
+                float3 ringPosition = targetPosition + math.rotate(rotation, movePosition);
+
+                movePositions[positionIndex] = ringPosition;
+                positionIndex = positionIndex + 1;
+
+                if (positionIndex >= positionCount)
+                    break;
+            }
+
+            ringCount = ringCount + 1;
+        }
+
+        return movePositions;
     }
 
     public Rect GetSelectArea()
