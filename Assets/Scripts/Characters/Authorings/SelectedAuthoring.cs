@@ -5,6 +5,8 @@ public struct Selected : IComponentData, IEnableableComponent
 {
     public float VisualScale;
     public Entity VisualEntity;
+    public bool OnSelected;
+    public bool OnDeselected;
 }
 
 class SelectedAuthoring : MonoBehaviour
@@ -21,7 +23,9 @@ class SelectedAuthoringBaker : Baker<SelectedAuthoring>
         AddComponent(entity, new Selected
         {
             VisualScale = authoring.VisualScale,
-            VisualEntity = GetEntity(authoring.VisualGameObject, TransformUsageFlags.Dynamic)
+            VisualEntity = GetEntity(authoring.VisualGameObject, TransformUsageFlags.Dynamic),
+            OnSelected = false,
+            OnDeselected = true
         });
 
         SetComponentEnabled<Selected>(entity, false);

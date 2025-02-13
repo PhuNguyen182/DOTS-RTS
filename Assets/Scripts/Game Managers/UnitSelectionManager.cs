@@ -73,9 +73,15 @@ public class UnitSelectionManager : MonoBehaviour
                                             .WithAll<Selected>()
                                             .Build(_entityManager);
         _selectEntities = _entityQuery.ToEntityArray(Allocator.Temp);
+        NativeArray<Selected> selecteds = _entityQuery.ToComponentDataArray<Selected>(Allocator.Temp);
 
         for (int i = 0; i < _selectEntities.Length; i++)
+        {
             _entityManager.SetComponentEnabled<Selected>(_selectEntities[i], false);
+            Selected selected = selecteds[i];
+            selected.OnDeselected = true;
+            _entityManager.SetComponentData(_selectEntities[i], selected);
+        }
     }
 
     private void MoveSelectedUnits()
@@ -122,7 +128,12 @@ public class UnitSelectionManager : MonoBehaviour
         if (collisionWorld.CastRay(raycastInput, out Unity.Physics.RaycastHit closestHit))
         {
             if (_entityManager.HasComponent<Unit>(closestHit.Entity))
+            {
                 _entityManager.SetComponentEnabled<Selected>(closestHit.Entity, true);
+                Selected selected = _entityManager.GetComponentData<Selected>(closestHit.Entity);
+                selected.OnSelected = true;
+                _entityManager.SetComponentData(closestHit.Entity, selected);
+            }
         }
     }
 
@@ -137,7 +148,12 @@ public class UnitSelectionManager : MonoBehaviour
             Vector2 unitScreenPosition = mainCamera.WorldToScreenPoint(localTransform.Position);
 
             if (selectArea.Contains(unitScreenPosition))
+            {
                 _entityManager.SetComponentEnabled<Selected>(_selectEntities[i], true);
+                Selected selected = _entityManager.GetComponentData<Selected>(_selectEntities[i]);
+                selected.OnSelected = true;
+                _entityManager.SetComponentData(_selectEntities[i], selected);
+            }
         }
     }
 
