@@ -17,7 +17,10 @@ partial struct ShootAttackSystem : ISystem
                 continue;
 
             shootAttack.ValueRW.Timer = shootAttack.ValueRO.TimerMax;
-            Debug.Log("Shoot");
+            RefRW<Health> targetHealth = SystemAPI.GetComponentRW<Health>(target.ValueRO.TargetEntity);
+
+            int attackDamage = 1;
+            targetHealth.ValueRW.HealthAmount -= attackDamage;
         }
     }
 }
