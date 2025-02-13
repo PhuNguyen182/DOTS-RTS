@@ -20,3 +20,12 @@ partial struct SelectUnitSystem : ISystem
         }
     }
 }
+
+[BurstCompile]
+public partial struct SelectUnitJob : IJobEntity
+{
+    public void Execute(in Selected selected)
+    {
+        
+    }
+}
