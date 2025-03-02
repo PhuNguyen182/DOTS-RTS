@@ -34,11 +34,14 @@ partial struct FindTargetSystem : ISystem
             {
                 foreach (DistanceHit distanceHit in distanceHits)
                 {
-                    Unit targetUnit = SystemAPI.GetComponent<Unit>(distanceHit.Entity);
-                    if(targetUnit.Faction == findTarget.ValueRO.TargetFaction)
+                    if (distanceHit.Entity != Entity.Null)
                     {
-                        target.ValueRW.TargetEntity = distanceHit.Entity;
-                        break;
+                        Unit targetUnit = SystemAPI.GetComponent<Unit>(distanceHit.Entity);
+                        if (targetUnit.Faction == findTarget.ValueRO.TargetFaction)
+                        {
+                            target.ValueRW.TargetEntity = distanceHit.Entity;
+                            break;
+                        }
                     }
                 }
             }

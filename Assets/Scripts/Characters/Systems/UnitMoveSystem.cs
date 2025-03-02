@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Physics;
 
+[UpdateBefore(typeof(BulletMoveSystem))]
 partial struct UnitMoveSystem : ISystem
 {
     [BurstCompile]
