@@ -41,15 +41,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7858901165059407483, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
       propertyPath: HealthAmount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -4015083908199430604, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
       propertyPath: Range
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -4015083908199430604, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
       propertyPath: TimerMax
-      value: 0.3
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -4015083908199430604, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
       propertyPath: TargetFaction
@@ -135,6 +135,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5780474050800515678, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7516555875995669050}
+    - targetCorrespondingSourceObject: {fileID: 5780474050800515678, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6374910003151265735}
   m_SourcePrefab: {fileID: 100100000, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
 --- !u!1 &9010661190916940459 stripped
 GameObject:
@@ -188,6 +191,20 @@ MonoBehaviour:
     z: 20
   MinDistance: 3
   MaxDistance: 10
+--- !u!114 &6374910003151265735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9010661190916940459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f61735a3de14042b8c6dc11703e2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimerMax: 0.5
+  Damage: 10
 --- !u!4 &9134727051158327684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6048619914466609521, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
