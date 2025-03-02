@@ -5,13 +5,15 @@ public struct MeleeAttack : IComponentData
 {
     public float Timer;
     public float TimerMax;
-    public float Damage;
+    public int Damage;
+    public float ColliderSize;
 }
 
 class MeleeAttackAuthoring : MonoBehaviour
 {
+    public int Damage;
     public float TimerMax;
-    public float Damage;
+    public float ColliderSize;
 }
 
 class MeleeAttackAuthoringBaker : Baker<MeleeAttackAuthoring>
@@ -22,7 +24,8 @@ class MeleeAttackAuthoringBaker : Baker<MeleeAttackAuthoring>
         AddComponent(entity, new MeleeAttack
         {
             TimerMax = authoring.TimerMax,
-            Damage = authoring.Damage
+            Damage = authoring.Damage,
+            ColliderSize = authoring.ColliderSize
         });
     }
 }

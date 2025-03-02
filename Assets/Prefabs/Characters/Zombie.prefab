@@ -203,8 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f61735a3de14042b8c6dc11703e2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerMax: 0.5
   Damage: 10
+  TimerMax: 0.5
+  ColliderSize: 0.5
 --- !u!4 &9134727051158327684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6048619914466609521, guid: 5bcd0aa3645f2774fb1c323f1d9f4ba0, type: 3}
